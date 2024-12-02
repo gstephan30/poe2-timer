@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        @font-face {
+            font-family: 'Fontin';
+            src: url('https://github.com/tgijsola/poe-theory-craft/raw/refs/heads/master/public/poe-theory-craft/font/fontin-bold-webfont.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Fontin', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .header {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .timer {
+            font-size: 2.5em;
+            color: #333;
+            margin: 10px 0;
+        }
+        .footer {
+            font-size: 1.2em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">@Tom & @Tim</div>
+    <div class="timer" id="countdown">Loading...</div>
+    <div class="footer">until POE2 goes live</div>
+    <script>
+        // Set target date and time (PST converted to UTC)
+        const targetTime = new Date("2024-12-06T19:00:00Z"); // 11:00 AM PST -> 19:00 UTC
+
+        function updateCountdown() {
+            const now = new Date(); // Current time in local timezone
+            const timeDifference = targetTime - now; // Time difference in milliseconds
+
+            if (timeDifference > 0) {
+                // Calculate days, hours, minutes, and seconds
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                // Display countdown
+                document.getElementById("countdown").innerHTML = 
+                    `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+            } else {
+                // If the target time is reached or passed
+                document.getElementById("countdown").innerHTML = "Time's up!";
+                clearInterval(countdownInterval); // Stop the timer
+            }
+        }
+
+        // Update countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // Call it immediately to avoid delay
+    </script>
+</body>
+</html>
